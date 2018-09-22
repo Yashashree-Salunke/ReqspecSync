@@ -23,6 +23,21 @@ namespace Scheduler.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tenants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Code = table.Column<string>(nullable: true),
+                    RepositoryUrl = table.Column<string>(nullable: true),
+                    AccessToken = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserstorySyncActionTypes",
                 columns: table => new
                 {
@@ -62,7 +77,9 @@ namespace Scheduler.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserstorySyncActionTypeId = table.Column<int>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
+                    UserstoryId = table.Column<int>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,6 +107,9 @@ namespace Scheduler.Migrations
         {
             migrationBuilder.DropTable(
                 name: "JobSyncTrackers");
+
+            migrationBuilder.DropTable(
+                name: "Tenants");
 
             migrationBuilder.DropTable(
                 name: "UserstorySyncTrackers");

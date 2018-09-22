@@ -1,11 +1,7 @@
-﻿using GitSync.Models;
+﻿using ReqspecModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Scheduler.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Scheduler.Persistence
@@ -17,6 +13,17 @@ namespace Scheduler.Persistence
             await JobTypesSeed(context);
             await UserstorySyncActionTypesSeed(context);
             await JobSyncTrackersSeed(context);
+            await TenantsSeed(context);
+        }
+
+        private async Task TenantsSeed(ReqspecScheduleContext context)
+        {
+            if (await context.Tenants.AnyAsync() == false)
+            {
+                context.Tenants.Add(new Tenant { Code = "Tenant 1", AccessToken = "T1_T1", RepositoryUrl = "Tenant one repo.git" });
+                context.Tenants.Add(new Tenant { Code = "Tenant 2", AccessToken = "T2_T2", RepositoryUrl = "Tenant two repo.git" });
+                await context.SaveChangesAsync();
+            }
         }
 
         private async Task JobSyncTrackersSeed(ReqspecScheduleContext context)

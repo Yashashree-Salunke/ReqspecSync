@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GitSync.Models
+namespace ReqspecModels
 {
-    public class UserstorySyncActionType
+    public class Tenant
     {
         public int Id { get; set; }
         public string Code { get; set; }
+        public string RepositoryUrl { get; set; }
+        public string AccessToken { get; set; }
     }
 }

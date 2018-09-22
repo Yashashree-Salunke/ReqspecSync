@@ -1,12 +1,9 @@
-﻿using GitSync.Models;
+﻿using ReqspecModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Scheduler.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Scheduler.Persistence
 {
@@ -16,6 +13,7 @@ namespace Scheduler.Persistence
         {
         }
 
+        public DbSet<Tenant> Tenants { get; set; }
         public DbSet<JobType> JobTypes { get; set; }
         public DbSet<JobSyncTracker> JobSyncTrackers { get; set; }
         public DbSet<UserstorySyncActionType> UserstorySyncActionTypes { get; set; }

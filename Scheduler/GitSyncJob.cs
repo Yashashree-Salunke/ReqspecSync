@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GitSync;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -16,10 +17,12 @@ namespace Scheduler
     {
         protected readonly ReqspecScheduleContext _context;
         protected readonly ILogger _logger;
-        public GitSyncJob(ReqspecScheduleContext context, ILogger<GitSyncJob> logger)
+        protected readonly IGitSyncProcessor _gitSyncProcessor;
+        public GitSyncJob(ReqspecScheduleContext context, ILogger<GitSyncJob> logger, IGitSyncProcessor gitSyncProcessor)
         {
             _context = context;
             _logger = logger;
+            _gitSyncProcessor = gitSyncProcessor;
         }
         public async Task Execute(IJobExecutionContext context)
         {
@@ -42,7 +45,22 @@ namespace Scheduler
 
                     if (totalUserstoriesToSync > 0)
                     {
-                        var userstoriesToSync = query.ToListAsync();
+                        var userstoriesToSync = await query.ToListAsync();
+
+                        var uniqueTenantIdList = userstoriesToSync.Select(p => p.TenantId).Distinct().ToList();
+                        var tenantInfo = await _context.Tenants.Where(p => uniqueTenantIdList.Contains(p.Id)).ToListAsync();
+
+                        var groupedRecords = userstoriesToSync.GroupBy(p => p.TenantId).ToDictionary(p => p.Key, p => p.ToList());
+
+                        tenantInfo.ForEach(p =>
+                        {
+                            _gitSyncProcessor.Execute(new GitSyncContext
+                            {
+                                AccessToken = p.AccessToken,
+                                RepositoryUrl = p.RepositoryUrl,
+                                Records = groupedRecords[p.Id]
+                            });
+                        });
                     }
 
                     lastSync.LastModifiedOn = DateTime.UtcNow;

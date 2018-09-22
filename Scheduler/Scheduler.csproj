@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GitSync\GitSync.csproj" />
+    <ProjectReference Include="..\ReqspecModels\ReqspecModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

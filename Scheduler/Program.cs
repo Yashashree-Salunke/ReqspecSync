@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 using Quartz.Logging;
+using GitSync;
 
 namespace Scheduler
 {
@@ -46,6 +47,7 @@ namespace Scheduler
                     options.EnableSensitiveDataLogging();
                 })
                 .AddTransient<GitSyncJob>()
+                .AddScoped<IGitSyncProcessor, GitSyncProcessor>()
                 .BuildServiceProvider();
             return serviceProvider;
         }
