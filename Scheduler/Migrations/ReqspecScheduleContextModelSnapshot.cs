@@ -29,7 +29,11 @@ namespace Scheduler.Migrations
 
                     b.Property<string>("Code");
 
+                    b.Property<string>("Password");
+
                     b.Property<string>("RepositoryUrl");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 

@@ -10,7 +10,7 @@ using Scheduler.Persistence;
 namespace Scheduler.Migrations
 {
     [DbContext(typeof(ReqspecScheduleContext))]
-    [Migration("20180922124618_InitialCreate")]
+    [Migration("20180924025357_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,11 @@ namespace Scheduler.Migrations
 
                     b.Property<string>("Code");
 
+                    b.Property<string>("Password");
+
                     b.Property<string>("RepositoryUrl");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 

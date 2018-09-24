@@ -10,5 +10,7 @@ namespace ReqspecModels
         public string Code { get; set; }
         public string RepositoryUrl { get; set; }
         public string AccessToken { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

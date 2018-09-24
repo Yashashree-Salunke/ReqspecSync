@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Scheduler
+﻿namespace Scheduler
 {
     public class ReqspecScheduleSetting
     {
+        public string SourceConnectionString { get; set; }
     }
 }

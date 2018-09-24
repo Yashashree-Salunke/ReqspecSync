@@ -20,7 +20,7 @@ namespace Scheduler.Persistence
         {
             if (await context.Tenants.AnyAsync() == false)
             {
-                context.Tenants.Add(new Tenant { Code = "Tenant 1", AccessToken = "T1_T1", RepositoryUrl = "Tenant one repo.git" });
+                context.Tenants.Add(new Tenant { Code = "Tenant 1", AccessToken = "T1_T1", RepositoryUrl = "Tenant one repo.git", Username = "adhamankar", Password = "somepassword" });
                 context.Tenants.Add(new Tenant { Code = "Tenant 2", AccessToken = "T2_T2", RepositoryUrl = "Tenant two repo.git" });
                 await context.SaveChangesAsync();
             }

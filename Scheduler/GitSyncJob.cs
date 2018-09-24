@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 using Scheduler.Persistence;
 using System;
@@ -17,13 +18,16 @@ namespace Scheduler
     {
         protected readonly ReqspecScheduleContext _context;
         protected readonly ILogger _logger;
+        protected readonly IOptions<ReqspecScheduleSetting> _settings;
         protected readonly IGitSyncProcessor _gitSyncProcessor;
-        public GitSyncJob(ReqspecScheduleContext context, ILogger<GitSyncJob> logger, IGitSyncProcessor gitSyncProcessor)
+        public GitSyncJob(ReqspecScheduleContext context, ILogger<GitSyncJob> logger, IOptions<ReqspecScheduleSetting> settings, IGitSyncProcessor gitSyncProcessor)
         {
             _context = context;
             _logger = logger;
             _gitSyncProcessor = gitSyncProcessor;
+            _settings = settings;
         }
+
         public async Task Execute(IJobExecutionContext context)
         {
             try
@@ -58,6 +62,9 @@ namespace Scheduler
                             {
                                 AccessToken = p.AccessToken,
                                 RepositoryUrl = p.RepositoryUrl,
+                                Username = p.Username,
+                                Password = p.Password,
+                                SourceConnectionString = _settings.Value.SourceConnectionString,
                                 Records = groupedRecords[p.Id]
                             });
                         });

@@ -30,7 +30,9 @@ namespace Scheduler.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Code = table.Column<string>(nullable: true),
                     RepositoryUrl = table.Column<string>(nullable: true),
-                    AccessToken = table.Column<string>(nullable: true)
+                    AccessToken = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

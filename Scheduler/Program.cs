@@ -48,7 +48,9 @@ namespace Scheduler
                 })
                 .AddTransient<GitSyncJob>()
                 .AddScoped<IGitSyncProcessor, GitSyncProcessor>()
+                .Configure<ReqspecScheduleSetting>(configuration)
                 .BuildServiceProvider();
+
             return serviceProvider;
         }
     }
