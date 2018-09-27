@@ -12,6 +12,7 @@ using System.IO;
 using System.Reflection;
 using Quartz.Logging;
 using GitSync;
+using GitSync.Services;
 
 namespace Scheduler
 {
@@ -48,6 +49,9 @@ namespace Scheduler
                 })
                 .AddTransient<GitSyncJob>()
                 .AddScoped<IGitSyncProcessor, GitSyncProcessor>()
+                .AddScoped <IDatabaseManagementService,DatabaseManagementService >()
+                .AddScoped <IFileManagementService ,FileManagementService>()
+                .AddScoped <IGitInteraction ,GitInteraction>()
                 .Configure<ReqspecScheduleSetting>(configuration)
                 .BuildServiceProvider();
 
